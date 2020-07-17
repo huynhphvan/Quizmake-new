@@ -1,35 +1,20 @@
 <div class="container">
-  <div class="row" cdkDropListGroup>
-    <div class="col">
-      <div class="example-container">
-        <h2>Danh sách câu hỏi trắc nghiệm</h2>
-
-        <div
-          cdkDropList
-          [cdkDropListData]="quizList"
-          class="example-list"
-          (cdkDropListDropped)="drop($event)"
-        >
-          <div class="example-box" *ngFor="let quiz of quizList" cdkDrag>
-            {{ quiz.question }}
-          </div>
-        </div>
-      </div>
+  <div class="row">
+    <div class="col-12">
+      <app-create-exam-stepper (examConfigEvent)="setExamConfig($event)" (examListEvent)="setExamList($event)"></app-create-exam-stepper>
     </div>
-    <div class="col">
-      <div class="example-container">
-        <h2>Danh sách câu hỏi kiểm tra</h2>
-        <div
-          cdkDropList
-          [cdkDropListData]="examList"
-          class="example-list"
-          (cdkDropListDropped)="drop($event)"
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <mat-tab-group mat-align-tabs="center">
+        <mat-tab
+          *ngFor="let exam of examQuizList; let i = index"
+          label="Đề số {{ i + 1 }}"
         >
-          <div class="example-box" *ngFor="let exam of examList" cdkDrag>
-            {{ exam.question }}
-          </div>
-        </div>
-      </div>
+          <app-exam-list [examQuizList]="exam"></app-exam-list>
+        </mat-tab>
+      </mat-tab-group>
     </div>
   </div>
 </div>

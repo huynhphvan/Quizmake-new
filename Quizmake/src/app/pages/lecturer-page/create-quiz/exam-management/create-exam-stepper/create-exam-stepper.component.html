@@ -1,0 +1,86 @@
+<div fxLayoutAlign="center center" fxLayout="column">
+  <mat-vertical-stepper #stepper [linear]="true">
+    <mat-step>
+      <form>
+        <ng-template matStepLabel>Chọn câu hỏi kiểm tra</ng-template>
+        <app-choose-quiz (chosenExamListEvent)="setExamList($event)"></app-choose-quiz>
+        <div>
+          <button mat-raised-button color="primary" matStepperNext>Tiếp tục</button>
+        </div>
+      </form>
+    </mat-step>
+  
+    <mat-step [stepControl]="firstFormGroup">
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Điền tên bài kiểm tra</ng-template>
+        <mat-form-field>
+          <mat-label>Tên bài kiểm tra</mat-label>
+          <input
+            matInput
+            placeholder="Nhập vào đây ..."
+            formControlName="firstCtrl"
+            name="examName"
+            [(ngModel)]="examConfig.examName"
+            required
+          />
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>Trở lại</button>
+          <button mat-raised-button color="primary" matStepperNext>Tiếp tục</button>
+        </div>
+      </form>
+    </mat-step>
+    
+    <mat-step [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Điền số mã đề cần tạo</ng-template>
+        <mat-form-field>
+          <mat-label>Số mã đề</mat-label>
+          <select formControlName="secondCtrl" [(ngModel)]="examConfig.numberOfCode" name="HHH" matNativeControl required>
+              <option [ngValue]="1">1</option>
+              <option [ngValue]="2" selected>2</option>
+              <option [ngValue]="3">3</option>
+              <option [ngValue]="4">4</option>
+              <option [ngValue]="5">5</option>
+            </select>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>Trở lại</button>
+          <button mat-raised-button color="primary" matStepperNext>Tiếp tục</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>Tuỳ chọn:</ng-template>
+      <div>
+          <section class="example-section">
+              <mat-checkbox [(ngModel)]="examConfig.quizRandom" class="example-margin">Xáo ngẫu nhiên câu trắc nghiệm</mat-checkbox>
+              <br>
+              <mat-checkbox [(ngModel)]="examConfig.answerRandom" class="example-margin">Xáo ngẫu nhiên đáp án</mat-checkbox>
+            </section>
+      </div>
+      <div>
+          <button mat-button matStepperPrevious>Trở lại</button>
+          <button mat-raised-button color="primary" matStepperNext>Tiếp tục</button>
+        </div>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Kết thúc</ng-template>
+      <div>
+        <h4>Tên bài kiểm tra: {{examConfig.examName}}</h4>
+        <h4>Số mã đề: {{examConfig.numberOfCode}}</h4>
+        <h4>Xáo câu hỏi: {{examConfig.quizRandom ? 'Có' : 'Không'}}</h4>
+        <h4>Xáo câu trả lời: {{examConfig.answerRandom ? 'Có' : 'Không'}}</h4>
+      </div>
+
+      <div>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+        <button mat-raised-button (click)="createExam()" color="primary">
+          Tạo bài kiểm tra
+        </button>
+      </div>
+    </mat-step>
+  </mat-vertical-stepper>
+  
+</div>

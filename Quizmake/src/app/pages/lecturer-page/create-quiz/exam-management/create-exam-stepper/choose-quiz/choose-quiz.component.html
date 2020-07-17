@@ -1,0 +1,38 @@
+<div class="row" cdkDropListGroup>
+  <div class="col">
+    <div class="example-container">
+      <br>
+      <h2 matBadge="{{quizList.length}}" matBadgePosition="after" matBadgeColor="accent">Danh sách câu hỏi trắc nghiệm</h2>
+      <div
+        cdkDropList
+        [cdkDropListData]="quizList"
+        class="example-list"
+        (cdkDropListDropped)="drop($event)"
+      >
+        <div class="example-box" *ngFor="let quiz of quizList" cdkDrag>
+          {{ quiz.question }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="example-container">
+      <br>
+      <h2 matBadge="{{chosenExamList.length}}" matBadgePosition="after" matBadgeColor="accent">Danh sách câu hỏi kiểm tra</h2>
+      <div
+        cdkDropList
+        [cdkDropListData]="chosenExamList"
+        class="example-list"
+        (cdkDropListDropped)="drop($event)"
+      >
+        <div
+          class="example-box"
+          *ngFor="let exam of chosenExamList"
+          cdkDrag
+        >
+          {{ exam.question }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

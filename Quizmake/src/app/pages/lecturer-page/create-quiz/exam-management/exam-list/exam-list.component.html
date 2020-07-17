@@ -1,0 +1,38 @@
+<div class="example-action-buttons">
+  <button mat-button (click)="accordion.openAll()">Expand All</button>
+  <button mat-button (click)="accordion.closeAll()">Collapse All</button>
+</div>
+<mat-accordion class="example-headers-align" multi>
+  <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+    <div
+      class="examplxe-box"
+      *ngFor="let exam of examQuizList; let index = index"
+      cdkDrag
+    >
+      <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <span class="font-weight-bold"
+              >Câu hỏi {{ index + 1 }}: &nbsp;</span
+            >
+            {{ exam.question }}
+            <span class="font-weight-light"> &nbsp;{{ exam.point }}</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <hr />
+        <p class="font-weight-bold">Câu trả lời:</p>
+        <div *ngFor="let answer of exam.answers; let i = index">
+          {{ answerLabels[i] }}. {{ answer }}
+        </div>
+        <hr />
+        <p class="font-weight-bold">
+          Đáp án: {{ answerLabels[exam.correct] }}.
+          {{ exam.answers[exam.correct] }}
+        </p>
+      </mat-expansion-panel>
+    <br>
+
+    </div>
+  </div>
+</mat-accordion>

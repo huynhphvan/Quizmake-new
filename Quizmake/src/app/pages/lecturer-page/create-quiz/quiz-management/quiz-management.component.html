@@ -3,6 +3,7 @@
     #drawer
     class="example-sidenav"
     mode="side"
+    opened
   >
     <button
       style="position: absolute; top: 1rem; right: 1rem;"
@@ -21,8 +22,8 @@
         (dropped)="onDrop($event)"
         [class.hovering]="isHovering"
       >
-        <h3>AngularFire Drop Zone</h3>
-        <p>Drag and Drop a File</p>
+        <h3>Thêm câu hỏi trắc nghiệm bằng file Word</h3>
+        <p>Kéo và thả file vào đây</p>
         <div class="file">
           <label class="file-label">
             <input
@@ -36,20 +37,20 @@
                 <i class="fa fa-upload"></i>
               </span>
               <span class="file-label">
-                or choose a file…
+                hoặc chọn một file ...
               </span>
             </span>
           </label>
         </div>
       </div>
-      <h3>Uploads</h3>
+      <h3>Trình trạng Tải lên:</h3>
       <button
         class="w-100"
         mat-raised-button
         color="accent"
         (click)="updateForm()"
       >
-        Cập nhật
+        Cập nhật Danh sách câu hỏi trắc nghiệm
       </button>
       <div *ngFor="let file of files">
         <app-upload-task
@@ -154,10 +155,12 @@
             </button>
           </div>
           <h2>Danh sách Câu hỏi trắc nghiệm</h2>
+          <h3 *ngIf="quizList.length === 0">Chưa có câu hỏi nào.</h3>
           <div
             cdkDropList
             class="example-list"
             (cdkDropListDropped)="drop($event)"
+            *ngIf="quizList.length !== 0"
           >
             <div
               class="example-box"

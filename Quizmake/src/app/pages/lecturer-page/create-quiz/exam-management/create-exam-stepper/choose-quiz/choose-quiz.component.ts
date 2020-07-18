@@ -1,5 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { QuizShareService } from '../../../services/quiz-share.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-choose-quiz',
@@ -39,11 +41,13 @@ export class ChooseQuizComponent implements OnInit {
     },
   ];
 
+  private valueFromChildSubscription: Subscription;
+
   chosenExamList: any = [];
   @Output() chosenExamListEvent = new EventEmitter<any>();
 
 
-  constructor() { }
+  constructor(private quizShareService: QuizShareService) { }
   
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
@@ -58,6 +62,12 @@ export class ChooseQuizComponent implements OnInit {
   }
   ngOnInit(): void {
     this.chosenExamListEvent.emit(this.chosenExamList);
+
+    this.valueFromChildSubscription = this.quizShareService.ValueFromChild.subscribe(
+      res => {
+        this.quizList = [...res]
+;      }
+    );
   }
 
 }

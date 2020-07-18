@@ -12,7 +12,7 @@
           *ngFor="let exam of examQuizList; let i = index"
           label="Đề số {{ i + 1 }}"
         >
-          <app-exam-list [examQuizList]="exam"></app-exam-list>
+          <app-exam-list [examNumber]="i + 1" [examQuizList]="exam"></app-exam-list>
         </mat-tab>
       </mat-tab-group>
     </div>

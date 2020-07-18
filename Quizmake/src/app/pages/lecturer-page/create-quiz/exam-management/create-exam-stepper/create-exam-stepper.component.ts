@@ -1,6 +1,8 @@
 import { Component, OnInit, Output, EventEmitter, Input } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import * as d3 from "d3-array";
+import { Subscription } from 'rxjs';
+import { QuizShareService } from '../../services/quiz-share.service';
 
 export interface ExamConfig {
   examName: string;
@@ -19,6 +21,9 @@ export class CreateExamStepperComponent implements OnInit {
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
 
+  panelOpenState = true;
+
+
   examList: any = [];
   chosenExamList: any = [];
   @Output() examListEvent = new EventEmitter<any>();
@@ -34,6 +39,7 @@ export class CreateExamStepperComponent implements OnInit {
   constructor(private _formBuilder: FormBuilder) {}
 
   createExam() {
+    this.examList = [];
     for (let i = 0; i < this.examConfig.numberOfCode; i++) {
       let arrayOfQuiz = Array.from(this.chosenExamList);
 
@@ -54,12 +60,13 @@ export class CreateExamStepperComponent implements OnInit {
       }
 
       this.examList.push(arrayOfQuiz);
+      this.panelOpenState = false; // hide stepper
     }
 
     console.log(this.examList);
 
-    // this.examListEvent.emit(this.examList);
-    // this.examConfigEvent.emit(this.examConfig);
+    this.examListEvent.emit(this.examList);
+    this.examConfigEvent.emit(this.examConfig);
   }
 
   setExamList($event) {
@@ -76,5 +83,6 @@ export class CreateExamStepperComponent implements OnInit {
     this.thirdFormGroup = this._formBuilder.group({
       thirdCtrl: ["", Validators.required],
     });
+
   }
 }

@@ -8,9 +8,13 @@ import { Component, OnInit, Output, EventEmitter, Input } from "@angular/core";
 })
 export class CreateQuizComponent implements OnInit {
 
-  @Input() quizData: any;
+  quizData: any;
 
   constructor() {}
+
+  setQuizList($event) {
+    this.quizData = [...$event];
+  }
   
   ngOnInit() {
     

@@ -1,21 +1,20 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import * as d3 from 'd3-array'
+import { Component, OnInit, Output, EventEmitter, Input } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import * as d3 from "d3-array";
 
 export interface ExamConfig {
-  examName: string,
-  numberOfCode: number,
-  quizRandom: boolean,
-  answerRandom: boolean
+  examName: string;
+  numberOfCode: number;
+  quizRandom: boolean;
+  answerRandom: boolean;
 }
 
 @Component({
-  selector: 'app-create-exam-stepper',
-  templateUrl: './create-exam-stepper.component.html',
-  styleUrls: ['./create-exam-stepper.component.scss']
+  selector: "app-create-exam-stepper",
+  templateUrl: "./create-exam-stepper.component.html",
+  styleUrls: ["./create-exam-stepper.component.scss"],
 })
 export class CreateExamStepperComponent implements OnInit {
-
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
@@ -25,55 +24,57 @@ export class CreateExamStepperComponent implements OnInit {
   @Output() examListEvent = new EventEmitter<any>();
 
   examConfig: ExamConfig = {
-    examName: '',
+    examName: "",
     numberOfCode: 1,
     quizRandom: false,
-    answerRandom: false
-  }
+    answerRandom: false,
+  };
   @Output() examConfigEvent = new EventEmitter<any>();
 
-  constructor(
-    private _formBuilder: FormBuilder) {}
-    collection = [1,2,3,4,5];
-  createExam() {
+  constructor(private _formBuilder: FormBuilder) {}
 
-    for(let i = 0; i < this.examConfig.numberOfCode; i++) {
+  createExam() {
+    for (let i = 0; i < this.examConfig.numberOfCode; i++) {
       let arrayOfQuiz = Array.from(this.chosenExamList);
-      
-      if(this.examConfig.quizRandom) {
+
+      if (this.examConfig.quizRandom) {
         arrayOfQuiz = d3.shuffle(arrayOfQuiz, 0, arrayOfQuiz.length);
       }
 
-      if(this.examConfig.answerRandom) {
-        arrayOfQuiz = Array.from(arrayOfQuiz.map((quiz: any) => {
-          console.log(d3.shuffle(quiz.answers, 0, quiz.answers.length));
-         return quiz.answers = d3.shuffle(quiz.answers, 0, quiz.answers.length);
-       }))
+      if (this.examConfig.answerRandom) {
+        arrayOfQuiz.map((quiz: any) => {
+          // console.log(d3.shuffle(quiz.answers, 0, quiz.answers.length));
+          let answers = Array.from(quiz.answers);
+          return {
+            point: quiz.point,
+            question: quiz.question,
+            answers: d3.shuffle(answers, 0, answers.length),
+          };
+        });
       }
-      
+
       this.examList.push(arrayOfQuiz);
     }
 
     console.log(this.examList);
-    
+
     // this.examListEvent.emit(this.examList);
     // this.examConfigEvent.emit(this.examConfig);
   }
 
   setExamList($event) {
-    this.chosenExamList = $event.slice();
+    this.chosenExamList = [...$event];
   }
 
   ngOnInit() {
     this.firstFormGroup = this._formBuilder.group({
-      firstCtrl: ['', Validators.required]
+      firstCtrl: ["", Validators.required],
     });
     this.secondFormGroup = this._formBuilder.group({
-      secondCtrl: ['', Validators.required]
+      secondCtrl: ["", Validators.required],
     });
     this.thirdFormGroup = this._formBuilder.group({
-      thirdCtrl: ['', Validators.required]
+      thirdCtrl: ["", Validators.required],
     });
   }
-
 }

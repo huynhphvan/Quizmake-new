@@ -3,8 +3,9 @@ import { Paragraph, Document, HeadingLevel, TextRun, AlignmentType } from 'docx'
 
 export class DocumentCreator {
     // tslint:disable-next-line: typedef
-    count = 1;
+    
     public create(examList: any, examNumber: number): Document {
+        let count = 1;
         const document = new Document();
         document.addSection({
             children: [
@@ -17,7 +18,7 @@ export class DocumentCreator {
               .map((quiz) => {
                 const arr: Paragraph[] = [];
                 arr.push(
-                    this.createQuizBox(quiz, this.count++)
+                    this.createQuizBox(quiz, count++)
                 );
                 return arr;
               })
@@ -39,5 +40,34 @@ export class DocumentCreator {
                 new TextRun(`D. ${quiz.answers[3]}`).break(),
             ]
         });
+    }
+
+    public createAnswer(answers, examNumber: number) {
+        let count = 1;
+        const document = new Document();
+        document.addSection({
+            children: [
+                new Paragraph({
+                    text: `Đáp án Đề số ${examNumber}`,
+                    heading: HeadingLevel.TITLE,
+                    alignment: AlignmentType.CENTER,
+                }),
+              ...answers
+              .map((answer) => {
+                const arr: Paragraph[] = [];
+                arr.push(
+                    new Paragraph({
+                        children: [
+                            new TextRun(`${count++}/ ${answer}`).break(),
+                        ]
+                    })
+                );
+                return arr;
+              })
+              .reduce((prev, curr) => prev.concat(curr), []),
+            ]
+        });
+
+        return document;
     }
 }

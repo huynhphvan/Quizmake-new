@@ -21,12 +21,23 @@ export class ExamListComponent implements OnInit {
     moveItemInArray(this.examQuizList, event.previousIndex, event.currentIndex);
   }
 
-  public download(): void {
+  public downloadExam(): void {
     const documentCreator = new DocumentCreator();
     const doc = documentCreator.create(this.examQuizList, this.examNumber);
 
     Packer.toBlob(doc).then(blob => {
-      saveAs(blob, "example.docx");
+      saveAs(blob, `Đề số ${this.examNumber}.docx`);
+    });
+  }
+
+  public downloadAnswer(): void {
+    const documentCreator = new DocumentCreator();
+    const labels = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
+    const answerList = this.examQuizList.map(quiz => labels[quiz.correct]);
+    const doc = documentCreator.createAnswer(answerList, this.examNumber);
+
+    Packer.toBlob(doc).then(blob => {
+      saveAs(blob, `Đáp án đề số ${this.examNumber}.docx`);
     });
   }
 

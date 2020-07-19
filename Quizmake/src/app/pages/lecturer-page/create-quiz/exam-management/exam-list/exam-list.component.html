@@ -1,6 +1,6 @@
 <div class="example-action-buttons">
-  <button mat-button (click)="accordion.openAll()">Expand All</button>
-  <button mat-button (click)="accordion.closeAll()">Collapse All</button>
+  <button mat-button (click)="accordion.openAll()">Mở rộng tất cả</button>
+  <button mat-button (click)="accordion.closeAll()">Thu nhỏ tất cả</button>
 </div>
 <mat-accordion class="example-headers-align" multi>
   <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
@@ -38,5 +38,9 @@
 </mat-accordion>
 <hr>
 <div class="text-center">
-  <button mat-raised-button color="primary" (click)="download()">Tải xuống</button>
+  <button mat-raised-button color="primary" (click)="downloadExam()">Tải xuống Đề thi {{examNumber}}</button>
+</div>
+<br>
+<div class="text-center">
+  <button mat-raised-button color="accent" (click)="downloadAnswer()">Tải xuống Đáp án đề thi {{examNumber}}</button>
 </div>

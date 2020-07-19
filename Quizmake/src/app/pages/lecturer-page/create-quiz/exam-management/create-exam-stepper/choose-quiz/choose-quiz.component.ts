@@ -10,38 +10,38 @@ import { Subscription } from 'rxjs';
 })
 export class ChooseQuizComponent implements OnInit {
   quizList: any = [
-    {
-      point: "(1 pount)",
-      question: "What is the scientific name of a butterfly?",
-      answers: ["Apis", "Coleoptera", "Formicidae", "Rhopalocera"],
-      correct: 3,
-    },
-    {
-      point: "(1 pount)",
-      question: "How hot is the surface of the sun?",
-      answers: ["1,233 K", "5,778 K", "12,130 K", "101,300 K"],
-      correct: 0,
-    },
-    {
-      point: "(1 pount)",
-      question: "Who are the actors in The Internship?",
-      answers: [
-        "Ben Stiller, Jonah Hill",
-        "Courteney Cox, Matt LeBlanc",
-        "Kaley Cuoco, Jim Parsons",
-        "Vince Vaughn, Owen Wilson",
-      ],
-      correct: 1,
-    },
-    {
-      point: "(1 pount)",
-      question: "What is the capital of Spain?",
-      answers: ["Berlin", "Buenos Aires", "Madrid", "San Juan"],
-      correct: 2,
-    },
+    // {
+    //   point: "(1 pount)",
+    //   question: "What is the scientific name of a butterfly?",
+    //   answers: ["Apis", "Coleoptera", "Formicidae", "Rhopalocera"],
+    //   correct: 3,
+    // },
+    // {
+    //   point: "(1 pount)",
+    //   question: "How hot is the surface of the sun?",
+    //   answers: ["1,233 K", "5,778 K", "12,130 K", "101,300 K"],
+    //   correct: 0,
+    // },
+    // {
+    //   point: "(1 pount)",
+    //   question: "Who are the actors in The Internship?",
+    //   answers: [
+    //     "Ben Stiller, Jonah Hill",
+    //     "Courteney Cox, Matt LeBlanc",
+    //     "Kaley Cuoco, Jim Parsons",
+    //     "Vince Vaughn, Owen Wilson",
+    //   ],
+    //   correct: 1,
+    // },
+    // {
+    //   point: "(1 pount)",
+    //   question: "What is the capital of Spain?",
+    //   answers: ["Berlin", "Buenos Aires", "Madrid", "San Juan"],
+    //   correct: 2,
+    // },
   ];
 
-  private valueFromChildSubscription: Subscription;
+  valueFromChildSubscription: Subscription;
 
   chosenExamList: any = [];
   @Output() chosenExamListEvent = new EventEmitter<any>();

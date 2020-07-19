@@ -60,6 +60,7 @@ export class QuizManagementComponent implements OnInit {
 
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.quizList, event.previousIndex, event.currentIndex);
+    this.quizShareService.notifyValue(this.quizList);
   }
 
   addAnswerBox() {
@@ -91,15 +92,14 @@ export class QuizManagementComponent implements OnInit {
     this.DocxReaderService.create({
       docxUrl: $event
     }).subscribe(( res : any) => {
-      this.quizList = [...res];
+      this.quizList = [...res.quizList];
       this.quizShareService.notifyValue(this.quizList);
     });
   }
 
   updateForm() {
     this.quizList = [...this.quizList];
-    console.log(this.quizList);
-    
+    this.quizShareService.notifyValue(this.quizList);
   }
 
   ngOnInit(): void {

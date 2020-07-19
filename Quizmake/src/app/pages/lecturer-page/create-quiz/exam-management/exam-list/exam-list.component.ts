@@ -26,9 +26,7 @@ export class ExamListComponent implements OnInit {
     const doc = documentCreator.create(this.examQuizList, this.examNumber);
 
     Packer.toBlob(doc).then(blob => {
-      console.log(blob);
       saveAs(blob, "example.docx");
-      console.log("Document created successfully");
     });
   }
 

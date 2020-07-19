@@ -1,4 +1,4 @@
-
+<br>
 <div *ngIf="percentage | async as pct">
     <progress class="progress is-info" 
               [value]="pct" 
@@ -13,8 +13,6 @@
   
     {{ snap.bytesTransferred }} of {{ snap.totalBytes }} 
     <div *ngIf="downloadURL as url">
-      <h3>Results!</h3>
-      <!-- <img [src]="url"><br> -->
       <a [href]="url" target="_blank" rel="noopener">Tải xuống!</a>
     </div> 
   <hr>

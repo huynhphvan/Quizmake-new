@@ -29,8 +29,6 @@ export class DocumentCreator {
     }
 
     public createQuizBox(quiz: any, count: number): Paragraph {
-        console.log(quiz);
-
         return new Paragraph({
             children: [
                 new TextRun(`${count}. ${quiz.point ? quiz.point : ''}`).break(),

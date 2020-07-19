@@ -29,7 +29,9 @@
               "@firebase/app",
               "firebase/app",
               "firebase",
-              "file-saver"
+              "file-saver",
+              "util",
+              "shuffle"
             ],
             "outputPath": "dist/Quizmake",
             "index": "src/index.html",

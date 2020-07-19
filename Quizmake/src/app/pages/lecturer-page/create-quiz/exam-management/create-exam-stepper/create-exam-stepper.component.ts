@@ -1,8 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import * as d3 from "d3-array";
-import { Subscription } from 'rxjs';
-import { QuizShareService } from '../../services/quiz-share.service';
 
 export interface ExamConfig {
   examName: string;
@@ -23,7 +21,6 @@ export class CreateExamStepperComponent implements OnInit {
 
   panelOpenState = true;
 
-
   examList: any = [];
   chosenExamList: any = [];
   @Output() examListEvent = new EventEmitter<any>();
@@ -40,37 +37,42 @@ export class CreateExamStepperComponent implements OnInit {
 
   createExam() {
     this.examList = [];
-    for (let i = 0; i < this.examConfig.numberOfCode; i++) {
-      let arrayOfQuiz = Array.from(this.chosenExamList);
+    const quizzes = this.chosenExamList;
 
-      if (this.examConfig.quizRandom) {
-        arrayOfQuiz = d3.shuffle(arrayOfQuiz, 0, arrayOfQuiz.length);
+    for (let code = 0; code < this.examConfig.numberOfCode; code++) {
+      let editedQuizArray = [];
+  
+      for (let quiz of this.examConfig.quizRandom ? d3.shuffle(quizzes) : quizzes) {
+        let answers = [];
+
+        for(let answer of quiz.answers) 
+          answers.push(answer);
+        let correctString = answers[quiz.correct];
+
+        let newQuiz = {
+          point: '',
+          question: '',
+          answers: [],
+          correct: 0,
+        };
+        
+
+        newQuiz.point = quiz.point;
+        newQuiz.question = quiz.question;
+        newQuiz.answers = this.examConfig.answerRandom ?  d3.shuffle(answers) : answers;
+        newQuiz.correct = newQuiz.answers.findIndex(ans => ans == correctString);
+        editedQuizArray.push(newQuiz);
       }
-
-      if (this.examConfig.answerRandom) {
-        arrayOfQuiz.map((quiz: any) => {
-          // console.log(d3.shuffle(quiz.answers, 0, quiz.answers.length));
-          let answers = Array.from(quiz.answers);
-          return {
-            point: quiz.point,
-            question: quiz.question,
-            answers: d3.shuffle(answers, 0, answers.length),
-          };
-        });
-      }
-
-      this.examList.push(arrayOfQuiz);
-      this.panelOpenState = false; // hide stepper
+      this.examList.push(editedQuizArray);
+      this.panelOpenState = false;
     }
-
-    console.log(this.examList);
 
     this.examListEvent.emit(this.examList);
     this.examConfigEvent.emit(this.examConfig);
   }
 
   setExamList($event) {
-    this.chosenExamList = [...$event];
+    this.chosenExamList = $event;
   }
 
   ngOnInit() {
@@ -83,6 +85,5 @@ export class CreateExamStepperComponent implements OnInit {
     this.thirdFormGroup = this._formBuilder.group({
       thirdCtrl: ["", Validators.required],
     });
-
   }
 }
